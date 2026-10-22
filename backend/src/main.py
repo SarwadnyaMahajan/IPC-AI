@@ -434,6 +434,25 @@ app.include_router(dictionary_router)
 app.include_router(lawyer_workspace_router)
 
 
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc: Exception):
+    from fastapi.responses import JSONResponse
+    from sqlalchemy.exc import DBAPIError
+
+    err_str = str(exc)
+    if isinstance(exc, DBAPIError) or "tenant/user" in err_str or "asyncpg" in err_str:
+        if "tenant/user" in err_str and "not found" in err_str:
+            detail = (
+                "Supabase database project is paused or project ref not found. "
+                "Please go to Supabase Dashboard (https://supabase.com/dashboard) and click 'Restore project', "
+                "or update your DATABASE_URL environment variable in Render."
+            )
+        else:
+            detail = f"Database service temporarily unavailable: {err_str[:250]}"
+        return JSONResponse(status_code=503, content={"detail": detail})
+
+    return JSONResponse(status_code=500, content={"detail": f"Internal Server Error: {err_str[:200]}"})
+
 
 @app.get("/")
 async def root():

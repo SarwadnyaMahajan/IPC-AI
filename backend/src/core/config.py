@@ -12,10 +12,19 @@ class Settings(BaseSettings):
 
     @property
     def resolved_database_url(self) -> str:
-        """Ensure direct Supabase URLs (IPv6-only) are automatically routed to IPv4 pooler, and strip any accidental whitespace/newlines."""
+        """Ensure direct Supabase URLs (IPv6-only) are automatically routed to IPv4 pooler, ensure asyncpg dialect is present, and strip any accidental whitespace/newlines."""
         import re
         url = (self.DATABASE_URL or "").strip().strip("'\"").strip()
-        # Match //user:password@db.<ref>.supabase.co:5432/dbname
+        if not url:
+            return ""
+
+        # Normalize driver: asyncpg requires postgresql+asyncpg://
+        if url.startswith("postgres://"):
+            url = "postgresql+asyncpg://" + url[len("postgres://"):]
+        elif url.startswith("postgresql://"):
+            url = "postgresql+asyncpg://" + url[len("postgresql://"):]
+
+        # Match direct Supabase host //user:password@db.<ref>.supabase.co:5432/dbname
         m = re.search(r'//([^:]+):([^@]+)@db\.([a-z0-9]+)\.supabase\.co(?::5432)?/([^\s\?]+)', url)
         if m:
             user, pwd, project_ref, dbname = m.groups()
