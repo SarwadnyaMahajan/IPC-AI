@@ -213,7 +213,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.version}>IPC.ai v1.0.0</Text>
+        <Text style={styles.version}>IPC.AI v1.0.0</Text>
       </ScrollView>
     </SafeAreaView>
   );

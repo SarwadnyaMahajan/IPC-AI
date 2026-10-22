@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -96,7 +97,7 @@ export default function LoginScreen() {
           badge_number: role === 'police' ? badgeNumber.trim() : undefined,
           station: role === 'police' ? station.trim() : undefined,
         });
-        Alert.alert('Registration Successful', 'Welcome to IPC.ai! Your account has been created.');
+        Alert.alert('Registration Successful', 'Welcome to IPC.AI! Your account has been created.');
       } else {
         await login(email.trim(), password);
       }
@@ -131,10 +132,12 @@ export default function LoginScreen() {
         >
           {/* Logo Section */}
           <View style={styles.logoSection}>
-            <View style={styles.logoCircle}>
-              <Ionicons name="shield-checkmark" size={40} color={Colors.primary} />
-            </View>
-            <Text style={styles.appName}>IPC.ai</Text>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.appName}>IPC.AI</Text>
             <Text style={styles.tagline}>AI-Powered Legal Assistant</Text>
           </View>
 
@@ -348,14 +351,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: Spacing.xl,
   },
-  logoCircle: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: Colors.primaryLight,
-    alignItems: 'center',
-    justifyContent: 'center',
+  logoImage: {
+    width: 84,
+    height: 84,
+    borderRadius: 20,
     marginBottom: Spacing.md,
+    ...Shadow.md,
   },
   appName: {
     fontSize: FontSize.title,

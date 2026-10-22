@@ -1359,6 +1359,11 @@ export default function HomeScreen() {
           <Ionicons name="menu-outline" size={28} color={colors.text} />
         </TouchableOpacity>
         <View style={styles.logoRow}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={styles.topBarLogoImage}
+            resizeMode="contain"
+          />
           <Text style={[styles.logoTextMain, { color: colors.text }]}>IPC</Text>
           <Text style={styles.logoTextSub}>.AI</Text>
           <Text style={[styles.logoLawIndia, { color: colors.textSecondary }]}>Law of India</Text>
@@ -1785,7 +1790,7 @@ export default function HomeScreen() {
           <View style={[styles.modalCard, { backgroundColor: colors.surface }]}>
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.text }]}>
-                {authMode === 'login' ? 'Sign In to IPC.ai' : 'Create Account'}
+                {authMode === 'login' ? 'Sign In to IPC.AI' : 'Create Account'}
               </Text>
               <TouchableOpacity onPress={() => setIsAuthModalOpen(false)}>
                 <Ionicons name="close" size={24} color={colors.text} />
@@ -2466,7 +2471,13 @@ const styles = StyleSheet.create({
   },
   logoRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
+  },
+  topBarLogoImage: {
+    width: 28,
+    height: 28,
+    borderRadius: 7,
+    marginRight: 8,
   },
   logoTextMain: {
     fontSize: 20,

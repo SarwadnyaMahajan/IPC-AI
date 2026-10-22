@@ -124,7 +124,7 @@ export default function MoreScreen() {
         </TouchableOpacity>
 
         {/* Version */}
-        <Text style={[styles.version, { color: colors.textLight }]}>IPC.ai v1.0.0</Text>
+        <Text style={[styles.version, { color: colors.textLight }]}>IPC.AI v1.0.0</Text>
       </ScrollView>
     </SafeAreaView>
   );
