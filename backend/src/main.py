@@ -1,3 +1,15 @@
+import sys
+import os
+
+# Auto-resolve paths so app runs seamlessly whether invoked from repo root or backend/ on Render
+_curr_file = os.path.abspath(__file__)
+_src_dir = os.path.dirname(_curr_file)
+_backend_dir = os.path.dirname(_src_dir)
+_root_dir = os.path.dirname(_backend_dir)
+for _p in [_root_dir, _backend_dir, _src_dir]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
